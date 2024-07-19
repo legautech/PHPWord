@@ -331,11 +331,11 @@ abstract class AbstractPart
         if ($xmlReader->elementExists('.//*["commentReference"=local-name()]', $domNode)) {
             $node = iterator_to_array($xmlReader->getElements('.//*["commentReference"=local-name()]', $domNode))[0];
             $attributeIdentifier = $node->attributes->getNamedItem('id');
-            if ($attributeIdentifier) {
+            $element = $parent->getElement($parent->countElements() - 1);
+            if ($attributeIdentifier && $element) {
                 $id = $attributeIdentifier->nodeValue;
-
-                $this->setCommentReference('start', $id, $parent->getElement($parent->countElements() - 1));
-                $this->setCommentReference('end', $id, $parent->getElement($parent->countElements() - 1));
+                $this->setCommentReference('start', $id, $element);
+                $this->setCommentReference('end', $id, $element);
             }
         }
     }
